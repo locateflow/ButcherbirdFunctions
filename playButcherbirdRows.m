@@ -18,6 +18,7 @@ persistent figChildren pt1 pt2 last orderData phrase1 phrase2 val;
 val = 'rearrange'
 figChildren = get(gca,'Children');
 orderData = get(figChildren,'CData');
+% insert the order data into the first row of CData
 orderData(:, 1) = flippedExtract(:,1);
 set(figChildren, 'CData', orderData);
 set(figChildren,'ButtonDownFcn', @decide);
@@ -28,10 +29,11 @@ set(figChildren,'ButtonDownFcn', @decide);
     function decide(varargin)
 %       val = get(hObj,'Value');
       pt = round(get(gca, 'CurrentPoint'))
+      val
 %       if pt(1) < 100
       if strcmp(val,'rearrange')
           pt1 = pt(3)
-          set(n,'ButtonDownFcn', @getSecondClick);
+          set(figChildren,'ButtonDownFcn', @getSecondClick);
       end
 %       if pt(1) > 100
       if strcmp(val,'listen')
@@ -53,8 +55,8 @@ set(figChildren,'ButtonDownFcn', @decide);
         end
         
         orderData = orderData_temp;
-        set(n,'CData',orderData);
-        set(n,'ButtonDownFcn', @decide);
+        set(figChildren,'CData',orderData);
+        set(figChildren,'ButtonDownFcn', @decide);
     end
       
 
@@ -85,7 +87,8 @@ uicontrol('Style', 'popup',...
            'Position', [0 0 100 50],...
            'Callback', @setmap);
     function setmap(hObj, event)
-        val = get(hObj,'Value');
+        str = 'that was val set by hObj'
+        val = get(hObj,'Value')
     end
 
 %%%
